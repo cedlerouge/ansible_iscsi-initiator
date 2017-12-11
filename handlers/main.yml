@@ -1,0 +1,17 @@
+---
+- name: start iscsid
+  service:
+    name: iscsid
+    state: started
+
+- name: stop iscsid
+  service:
+    name: iscsid
+    state: stopped
+
+- name: restart iscsid
+  service:
+    name: iscsid
+    state: restarted
+
+

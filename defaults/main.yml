@@ -1,0 +1,12 @@
+---
+session_auth_chap: true
+chap_username: test
+chap_password: test
+discovery_chape: true
+iscsi_luns:
+  - name: iqn.2017-12.net.example:san.dev1
+    portal: 192.168.122.192
+    port: 3260
+    username: test
+    password: testtest
+# doit on donner la possibilite d'avoir un login par lun ?    

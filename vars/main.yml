@@ -1,0 +1,5 @@
+---
+iscsi_initiator_packages:
+  - open-iscsi
+  - multipath-tools
+

@@ -1,0 +1,41 @@
+---
+- name: install packages
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - "{{ iscsi_initiator_packages }}"
+
+- name: Configure CHAP authentication
+  template:
+    src: etc/iscsi/iscsid.conf.j2
+    dest: /etc/iscsi/iscsid.conf
+  notify: restart iscsid
+
+- name: discovers iscsi target
+  open_iscsi:
+    show_nodes: yes
+    discover: yes
+    portal: "{{ item.portal }}"
+    node_user: "{{ item.username }}"
+    node_pass: "{{ item.password }}"
+    port: "{{ item.port }}" 
+  with_items:
+    - "{{ iscsi_luns }}"
+
+- name: log on target 
+  open_iscsi:
+    login: yes
+    target: "{{ item.name }}"
+    portal: "{{ item.portal }}"
+    node_user: "{{ item.username }}"
+    node_pass: "{{ item.password }}"
+    port: "{{ item.port }}" 
+  with_items:
+    - "{{ iscsi_luns }}"
+
+- name: show sessions
+  shell: >
+    iscsiadm -m session -o show
+
+
